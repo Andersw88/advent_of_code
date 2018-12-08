@@ -27,8 +27,11 @@ results_list = [0] * len(char_list)
 
 start = timer()
 
+input_ord = [ord(x) for x in input]
+input_ord = shrink_str(input_ord)
+
 for index, c in enumerate(char_list):
-    ord_list = [ord(x) for x in input if x != chr(c) and x != chr(c + 32)]
+    ord_list = [x for x in input_ord if x != c and x != c + 32]
 
     ord_list = shrink_str(ord_list)
     
