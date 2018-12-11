@@ -22,17 +22,33 @@ for step, dep in input_array_ord:
     existing_letters.add(dep)
 
 procssed_steps = ""
+num_existing_letters = len(existing_letters)
 
 step_set = set()
 
+time_when_completed = np.full([num_existing_letters], -1)
 
-for i in range(len(existing_letters)):
-    for step in range(num_letters):
-        if step not in step_set and not (dependency_arrays[step]).any():
+workers = 5
+time = 0
+while len(procssed_steps) != num_existing_letters:
+    for step in range(num_existing_letters):
+        if time_when_completed[step] != -1 and time_when_completed[step] <= time:
+            workers += 1
+            time_when_completed[step] = -1
             for dep_array in dependency_arrays:
                 dep_array[step] = False
-            step_set.add(step)
             procssed_steps += (chr(step + 65))
-            break
 
-print(procssed_steps, len(procssed_steps))
+    for step in range(num_existing_letters):
+        if step not in step_set and not (dependency_arrays[step]).any() and workers > 0:
+            time_when_completed[step] = time + step + 61
+            workers -= 1
+            step_set.add(step)
+            # break
+    
+    
+    time += 1
+
+time -= 1
+
+print(procssed_steps, len(procssed_steps), time)
