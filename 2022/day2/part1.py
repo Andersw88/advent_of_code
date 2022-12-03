@@ -12,7 +12,7 @@ score = {
 
     'C X': 1 + 6,
     'C Y': 2,
-    'C Z': 3 + 3},
+    'C Z': 3 + 3}
 
 total_score = 0
 for row in input:
