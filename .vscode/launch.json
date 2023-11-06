@@ -5,12 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File (Integrated Terminal)",
-            "type": "python",
+            "type": "lldb",
             "request": "launch",
-            "program": "${file}",
-            "cwd": "${fileDirname}",
-            "console": "integratedTerminal"
-        }
+            "name": "Debug example 'day3b'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--package=day3b"
+                ],
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+        },
     ]
 }
