@@ -4,18 +4,26 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        // {
+        //     "type": "lldb",
+        //     "request": "launch",
+        //     "name": "Debug example 'day5a'",
+        //     "cargo": {
+        //         "args": [
+        //             "build",
+        //             "--package=day5a"
+        //         ],
+        //     },
+        //     "args": [],
+        //     "cwd": "${workspaceFolder}",
+        // },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug example 'day3b'",
+            "name": "Debug Rust",
             "cargo": {
-                "args": [
-                    "build",
-                    "--package=day3b"
-                ],
-            },
-            "args": [],
-            "cwd": "${workspaceFolder}",
-        },
+              "args": ["build", "--manifest-path", "${fileDirname}/../Cargo.toml"]
+            }
+          }
     ]
 }
