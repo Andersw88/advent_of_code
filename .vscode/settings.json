@@ -5,4 +5,12 @@
     "lldb.launch.sourceMap": {
         "/rustc/fee5518cdd4435c60a57fe3bb734fc1a14abeb7a/": "C:/Users/Anders4/.rustup/toolchains/stable-x86_64-pc-windows-msvc/lib/rustlib/src/rust"
       },
+    "terminal.integrated.profiles.windows": {
+    "Git Bash": {
+      "source": "Git Bash",
+      "env": {
+          "LANG": "C.UTF-8"
+      }
+    }
+  }
 }

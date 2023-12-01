@@ -2,4 +2,5 @@
 resolver = "2"
 members = [
     "2022/rust/*",
+    "2023/rust/*"
 ]
