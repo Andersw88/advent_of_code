@@ -1,4 +1,3 @@
-use std::mem::swap;
 use itertools::Itertools;
 
 fn main() {
@@ -33,7 +32,6 @@ fn main() {
         });
 
     let mut next_category_seeds: Vec<u8> = vec![0_u8; max];
-    // let mut seeds_bc: Vec<u8> = seeds.clone();
     input.skip(1).for_each(|row| {
         let parts: Vec<&str> = row.split_whitespace().collect();
 
@@ -47,37 +45,30 @@ fn main() {
                 let start_src = values[1];
                 let range_length = values[2];
 
-
-                (0_usize..max).for_each(|i| {
-                    if seeds[i] > 0 {
-                        if i >= start_src && i < start_src + range_length {
-                            if next_category_seeds[i] == 2 {
-                                next_category_seeds[i] = 0;
-                            }
-                            seeds[i] = 0;
-                            let new_id = start_dest + i - start_src;
-                            next_category_seeds[new_id] = 1;
-                        } else if next_category_seeds[i] != 1 {
-
-                            next_category_seeds[i] = 2;
-                        }
+                (start_src..start_src + range_length).for_each(|i| {
+                    if seeds[i] == 1 {
+                        seeds[i] = 0;
+                        let new_id = start_dest + i - start_src;
+                        next_category_seeds[new_id] = 1;
                     }
                 });
             }
             _ => {
-                // let before = seeds_bc.iter().filter(|c| **c > 0).count();
-                // let after = next_category_seeds.iter().filter(|c| **c > 0).count();
-                // println!("{:?}", seeds_bc.iter().map(|c| (*c + b'0') as char).join(""));
-                // println!("{:?}", seeds.iter().map(|c| (*c + b'0') as char).join(""));
-                // println!("{:?}", next_category_seeds.iter().map(|c| (*c + b'0') as char).join(""));
-                // assert!(before == after);
-                seeds = next_category_seeds.iter().map(|c| (*c > 0) as u8).collect_vec();
+                seeds = next_category_seeds
+                    .iter()
+                    .zip(seeds.iter())
+                    .map(|(&c, &s)| (c == 1 || s == 1) as u8)
+                    .collect_vec();
                 next_category_seeds.fill(0);
             }
         }
     });
 
-    swap(&mut seeds, &mut next_category_seeds);
+    seeds = next_category_seeds
+        .iter()
+        .zip(seeds.iter())
+        .map(|(&c, &s)| (c == 1 || s == 1) as u8)
+        .collect_vec();
     let result = seeds.iter().find_position(|c| **c > 0).unwrap().0;
 
     println!("{:?}", result);
