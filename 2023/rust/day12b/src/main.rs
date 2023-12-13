@@ -11,7 +11,6 @@ use itertools::Itertools;
 fn ranges(
     j: usize,
     depth: usize,
-    curr_path: &mut Vec<u8>,
     row: &Vec<i32>,
     spring_spans: &Vec<usize>,
 ) -> usize {
@@ -33,9 +32,6 @@ fn ranges(
 
     let mut permutations: usize = 0;
     for i in j..=end_range {
-        if i > 0 && row[i - 1] == 1 {
-            continue;
-        }
 
         let curr_span_end = spring_spans[curr_span_index] + i;
         if curr_span_end < row.len() && row[curr_span_end] == 1 {
@@ -45,7 +41,6 @@ fn ranges(
         if curr_span_end > row.len() || row[i..curr_span_end].iter().any(|&c| c == 0) {
             continue;
         }
-        curr_path[spring_spans.len() - depth] = i as u8;
 
         if depth == 1 {
             if row[curr_span_end..len].iter().any(|&c| c == 1) {
@@ -62,7 +57,6 @@ fn ranges(
         permutations += ranges(
             curr_span_end + 1, // One free space between
             depth - 1,
-            curr_path,
             row,
             spring_spans,
         );
@@ -111,7 +105,6 @@ fn main() {
             ranges(
                 0,
                 spring_spans.len(),
-                &mut vec![0_u8; spring_spans.len()],
                 &row,
                 &spring_spans,
             )
